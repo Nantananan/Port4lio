@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renan Clint — Portfolio</title>
+
+<!-- Google Fonts: Fredoka (headings/display) + Space Mono (body/code accents) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- All visual styling lives in styles.css -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  
+<!-- =====================  NAV  ===================== -->
+<!--<!nav>
+  <div class="logo"><span class="dot"></span> renanclint</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#certifications">Education</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+-->
+<!-- =====================  HERO / HOME  =====================
+     Intro headline + CTA buttons. Edit the name, tagline, and
+     hero-sub paragraph below to make this yours. -->
+<section id="home">
+  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">🌙 Dark</button>
+
+  <!-- decorative floating tags — purely visual, safe to delete or edit text -->
+  <!--<div class="pin pin1">
+    <img src="images/bilog.jpg" alt="">
+  </div>
+  <div class="pin pin2"><img src="images/bilog.jpg" alt="">
+  </div>
+  <div class="pin pin3"><img src="images/bilog.jpg" alt="">
+  </div>
+  <span class="eyebrow">Hi, I'm Renan Clint </span> -->
+  <h1 class="name" id="name">
+    <span data-img="images/tentclr.jpg">Renan</span>
+    <span data-img="images/wally.jpg">Clint</span>
+  </h1>
+
+  <div class="hover-img" id="hoverImg"></div>
+
+  <p class="hero-sub">I'm an aspiring Front-end developer who treats the browser like a sketchbook mixing engineering with every project. working with teams everywhere.</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-secondary">Say hello</a>
+  </div>
+
+  <div class="photo-stack" id="stack">
+    <div class="stack-card" data-base-x="-150" data-base-y="-10" data-rot="-8" style="z-index:1;">
+      <img src="images/bilog.jpg" alt="">
+    </div>
+    <div class="stack-card" data-base-x="-60" data-base-y="-18" data-rot="-3" style="z-index:2;">
+      <img src="images/bilog.jpg" alt="">
+    </div>
+    <div class="stack-card" data-base-x="60" data-base-y="-8" data-rot="3" style="z-index:3;">
+      <img src="images/bilog.jpg" alt="">
+    </div>
+    <div class="stack-card" data-base-x="150" data-base-y="0" data-rot="8" style="z-index:4;">
+      <img src="images/bilog.jpg" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- =====================  ABOUT  =====================
+     Left column: bio paragraphs + tech stack tags.
+     Right column: timeline list (work experience). -->
+<section id="about">
+  <div class="section-head">
+    <h2>About me</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-photo-frame">
+        <img src="assts/6.jpg" alt="Portrait of Renan">
+      </div>
+    </div>
+
+    <div class="about-copy">
+      <p> Information Technology Student with a passion for creating engaging digital experiences and Proven track record of academic excellence.</p>
+      <p style="margin-top:12px;">When I'm not shipping features, I'm usually sketching interface ideas in a notebook, or hunting down the perfect shade of Blue.</p>
+     <!--
+      <ul class="about-list">
+        <li>
+          <div class="role">1st year Representative - JPCS</div>
+          <div class="meta">2023 — 2024</div>
+        </li>
+        <li>
+          <div class="role"> Interim Secretary - JPCS</div>
+          <div class="meta">2024 — 2025</div>
+        </li>
+      </ul> -->
+    </div> <div class="stack"> 
+        <span>JavaScript</span><span>React</span><span>TypeScript</span><span>java</span><span>Figma</span><span>CSS/SCSS</span><span>SQL</span><span>illustrations</span><span>Design</span>
+      </div>
+  </div>
+</section>
+
+<!-- =====================  CERTIFICATIONS & EDUCATION  =====================
+     Each .card below is one certification or degree. Copy/paste a
+     .card block to add more — the tab color cycles automatically
+     based on card position (see .card:nth-child rules in styles.css). -->
+<section id="certifications">
+  <div class="section-head">
+    <h2>Certifications &amp; Education</h2>
+    <span class="tag">// credentials</span>
+  </div>
+  <div class="cert-grid">
+
+    <!-- Certification 1 
+    <div class="card">
+      <span class="tab">Certification</span>
+      <h3>AWS Certified Developer</h3>
+      <p>Associate-level certification covering cloud application design, deployment, and debugging on AWS.</p>
+      <div class="links">
+        <a href="#">Verify</a>
+      </div>
+    </div>
+
+     Certification 2
+    <div class="card">
+      <span class="tab">Certification</span>
+      <h3>Google UX Design</h3>
+      <p>Professional certificate covering user research, wireframing, prototyping, and usability testing.</p>
+      <div class="links">
+        <a href="#">Verify</a>
+      </div>
+    </div>
+      -->
+
+    <!-- Education 1 -->
+    <div class="card card-clickable" data-img="assts/6.jpg" data-description="Focused on human-computer interaction and web technologies with hands-on projects in frontend development and UI/UX design.">
+      <span class="tab">Education</span>
+      <h3>B.S. Information Technology</h3>
+      <p>Philippine Christian University — 2023 to Present. Focus on human-computer interaction and web technologies.</p>
+      <div class="links">
+        <a href="#">WIP!</a>
+      </div>
+    </div>
+
+    <!-- Education 2 -->
+    <div class="card card-clickable" data-img="assts/6.jpg" data-description="Served as student representative, organizing events and initiatives. Promoted leadership and community engagement among student body.">
+      <span class="tab">Extra Curricular</span>
+      <h3>1st Year Representative - 2nd Year Interim Secretary</h3>
+      <p>Junior Philippine Computer Society PCU Manila Chapter — 2026. Leadership role as Student Representative.</p>
+      <div class="links">
+        <a href="#">Certificate</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================  GALLERY  =====================
+     A masonry-style grid of graphics/illustrations (see .gallery
+     in styles.css). Swap the img src for your own artwork and edit
+     the caption text under each. Add or remove .gallery-item
+     blocks freely — the layout re-flows automatically.
+     Clicking an image opens it full-size (see setupGalleryLightbox
+     in script.js). -->
+<section id="gallery">
+  <div class="section-head">
+    <h2>Graphics &amp; Illustration</h2>
+    <span class="tag">// a few favorites</span>
+  </div>
+  <div class="gallery">
+
+    <div class="gallery-item">
+      <img src="assts/sgaw.jpg" alt="Illustration placeholder 1">
+      <div class="caption">UnderControl — ink &amp; digital</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assts/polling.jpg" alt="Illustration placeholder 2">
+      <div class="caption">Polling — Ink & Digital</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assts/mushroom.jpg" alt="Illustration placeholder 3">
+      <div class="caption">MasRoom</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assts/plower 3.jpg" alt="Illustration placeholder 4">
+      <div class="caption">Flw3r</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assts/stares.jpg" alt="Illustration placeholder 5">
+      <div class="caption">Stares</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assts/plower 1.jpg" alt="Illustration placeholder 6">
+      <div class="caption">F1owr</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================  PROJECTS  =====================
+     Showcase your work and projects. Each .project-card 
+     displays a project with title, description, and links. -->
+<section id="projects">
+  <div class="section-head">
+    <h2>Projects</h2>
+    <span class="tag">// recent work</span>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <img src="assts/6.jpg" alt="Project 1">
+      <div class="project-content">
+        <h3>Project Title 1</h3>
+        <p>A brief description of your project goes here. Describe the problem you solved and the technologies used.</p>
+        <div class="links">
+          <a href="#">View</a>
+          <a href="#">Code</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="assts/6.jpg" alt="Project 2">
+      <div class="project-content">
+        <h3>Project Title 2</h3>
+        <p>A brief description of your project goes here. Describe the problem you solved and the technologies used.</p>
+        <div class="links">
+          <a href="#">View</a>
+          <a href="#">Code</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="assts/6.jpg" alt="Project 3">
+      <div class="project-content">
+        <h3>Project Title 3</h3>
+        <p>A brief description of your project goes here. Describe the problem you solved and the technologies used.</p>
+        <div class="links">
+          <a href="#">View</a>
+          <a href="#">Code</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================  CONTACT  =====================
+     Closing CTA — update the mailto link, resume link, and
+     social links (currently placeholder "#" hrefs). -->
+<section id="contact">
+  <div class="eyebrow" style="background:var(--mint);">Let's talk</div>
+  <h2>Got a project in mind? I'd love to hear about it.</h2>
+  <p>Whether it's a full site build or just an idea you want to sanity-check, my inbox is always open.</p>
+  <div class="contact-row">
+    <a href="mailto:renanclint@gmail.com" class="btn btn-primary">Email me</a>
+    <a href="#" class="btn btn-secondary">Download resume</a>
+  </div>
+  <div class="social">
+    <a href="https://github.com/renanclint" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/renanclint" target="_blank">LinkedIn</a>
+  </div>
+</section>
+
+<!-- =====================  FOOTER  ===================== -->
+<footer>
+  specifically Designed For you,
+  all rights reserved © 2026 Renan Clint
+</footer>
+
+<!-- Card Details Modal -->
+<div class="card-modal" id="cardModal">
+  <div class="card-modal-content">
+    <button class="card-modal-close" id="cardModalClose">&times;</button>
+    <img class="card-modal-img" id="cardModalImg" src="" alt="">
+    <div class="card-modal-text">
+      <h3 id="cardModalTitle"></h3>
+      <p id="cardModalDescription"></p>
+    </div>
+  </div>
+</div>
+
+<!-- All interactive behavior lives in script.js -->
+<script src="script.js"></script>
+</body>
+</html>
