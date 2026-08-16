@@ -22,9 +22,9 @@
 :root{
   --cream:#ffffff;     /* page background */
   --ink:#20203A;       /* main text / borders / dark panels */
-  --coral:#ff1500;     /* primary accent (buttons, highlights) */
+  --coral:#da645a;     /* primary accent (buttons, highlights) */
   --sunshine:#FFCA3A;  /* secondary accent (eyebrow tags) */
-  --mint:#5FD3A0;      /* accent color for pins/tabs */
+  --mint:#5faf8c;      /* accent color for pins/tabs */
   --grape:#9D6FE0;     /* accent color for pins/tabs */
   --paper:#FFFFFF;     /* card background */
   --bg-soft:#f4f1ea;   /* main canvas */
@@ -44,13 +44,13 @@ body.dark-theme{
   --bg-soft:#0e1220;
   --text-main:#f5f3ee;
   --text-soft:#edf2ff;
-  --text-subtle:#b8bedf;
+  --text-subtle:#040c3a;
   --text-inverse:#171a2b;
-  --text-inverse-soft:#dfe5ff;
-  --muted:#dfe7ff;
+  --text-inverse-soft:#1e2a46;
+  --muted:#1a4047;
   --sunshine:#ffd765;
   --mint:#79e3b5;
-  --grape:#b998ff;
+  --grape:#240469;
   --shadow: rgba(0,0,0,0.35);
 }
 
@@ -272,6 +272,8 @@ section{
   border-radius:20px;
   transform:rotate(-2deg);
   margin-bottom:24px;
+  position:relative;
+  z-index:2;
 }
 .hero-title{
   font-size:clamp(2.6rem, 7vw, 5.5rem);
@@ -659,23 +661,31 @@ section{
 #contact{
   text-align:center;
   padding-bottom:140px;
+  position:relative;
+  overflow:hidden;
 }
 #contact h2{
   font-size:clamp(2rem,6vw,3.4rem);
   max-width:16ch;
   margin:0 auto 20px;
+  position:relative;
+  z-index:2;
 }
 #contact p{
   color:var(--text-soft);
   max-width:44ch;
   margin:0 auto 36px;
   line-height:1.7;
+  position:relative;
+  z-index:2;
 }
 .contact-row{
   display:flex;
   justify-content:center;
   gap:18px;
   flex-wrap:wrap;
+  position:relative;
+  z-index:2;
 }
 .social{
   display:flex;
@@ -684,8 +694,50 @@ section{
   margin-top:44px;
   font-size:0.9rem;
   font-weight:700;
+  position:relative;
+  z-index:2;
 }
 .social a{text-decoration:none; border-bottom:2px solid var(--ink);}
+.hero{
+  position:relative;
+  overflow:visible; /* don't clip the section */
+}
+
+.floating-card{
+  position:absolute;
+  right:-5%;
+  top:50%;
+  transform:translateY(-50%);
+  width:480px;          /* scale as needed */
+  aspect-ratio:1080/1350; /* matches the source image, no distortion */
+  height:auto;
+  z-index:0;             /* behind your text/buttons */
+  pointer-events:auto;   /* so hover works */
+  opacity:0.35;
+  transition:opacity 0.45s cubic-bezier(.22,1,.36,1),
+             transform 0.45s cubic-bezier(.22,1,.36,1);
+  will-change:transform, opacity;
+}
+
+.floating-card img{
+  width:100%;
+  height:100%;
+  object-fit:contain;   /* shows full artwork, nothing cropped */
+  display:block;
+}
+
+.floating-card:hover{
+  opacity:0.6;
+  transform:translateY(-50%) scale(1.03);
+}
+
+@media (max-width:1024px){
+  .floating-card{
+    width:70%;
+    right:-10%;
+    opacity:0.25;
+  }
+}
 
 /* ---- 8. Card Modal/Details Popup ---- */
 .card-modal{
@@ -753,6 +805,19 @@ section{
 }
 .card-clickable:hover{
   background:var(--bg-soft);
+}
+
+/* ---------- CAT SPRITE ---------- */
+.cat-sprite{
+  position:fixed;
+  top:0;
+  left:0;
+  width:96px;
+  height:96px;
+  image-rendering:pixelated; /* keep pixel art crisp when scaled */
+  z-index:9999;
+  pointer-events:none;
+  will-change:transform;
 }
 
 /* ---- 9. Footer ---- */

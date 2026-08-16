@@ -81,6 +81,42 @@ stack.addEventListener('mouseleave', () => {
   cards.forEach(setBaseTransform);
 });
 
+/* ---- Floating Card with Repel Effect ---- */
+const floatingCard = document.getElementById('floatingCard');
+if (floatingCard) {
+  const REPEL_RADIUS = 200;
+  const MAX_PUSH = 45;
+
+  function setFloatingCardTransform(card, pushX = 0, pushY = 0, pushRot = 0) {
+    const baseRot = parseFloat(card.dataset.rot);
+    card.style.transform =
+      `translate(-50%, -50%) translate(${pushX}px, ${pushY}px) rotate(${baseRot + pushRot}deg)`;
+  }
+
+  setFloatingCardTransform(floatingCard);
+
+  document.addEventListener('mousemove', (e) => {
+    const rect = floatingCard.getBoundingClientRect();
+    const cardCenterX = rect.left + rect.width / 2;
+    const cardCenterY = rect.top + rect.height / 2;
+
+    const dx = cardCenterX - e.clientX;
+    const dy = cardCenterY - e.clientY;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+    if (dist < REPEL_RADIUS) {
+      const strength = (1 - dist / REPEL_RADIUS);
+      const pushX = (dx / dist) * strength * MAX_PUSH;
+      const pushY = (dy / dist) * strength * MAX_PUSH;
+      const pushRot = strength * 8;
+
+      setFloatingCardTransform(floatingCard, pushX, pushY, pushRot);
+    } else {
+      setFloatingCardTransform(floatingCard);
+    }
+  });
+}
+
 /* ---- Card Modal / Details Popup ---- */
 const cardModal = document.getElementById('cardModal');
 const cardModalClose = document.getElementById('cardModalClose');
@@ -119,3 +155,106 @@ document.addEventListener('keydown', (e) => {
     closeCardModal();
   }
 });
+
+(function(){
+  const cat = document.getElementById('catSprite');
+
+  // ---- Frame sets ----
+  const frames = {
+    idle: { right: 'Sprites/posa idle right.jpg',  left: 'Sprites/posa idle left.jpg' },
+    walk: { right: ['Sprites/posa run1 right.jpg','Sprites/posa run2 right.jpg'],
+             left: ['Sprites/posa run1 left.jpg','Sprites/posa run2 left.jpg'] },
+    run:  { right: ['Sprites/posa gallop right.jpg','Sprites/posa run1 right.jpg','Sprites/posa run2 right.jpg'],
+             left: ['Sprites/posa gallop left.jpg','Sprites/posa run1 left.jpg','Sprites/posa run2 left.jpg'] }
+  };
+
+  // ---- State ----
+  let x = 100, y = 100;              // current position
+  let targetX = 100, targetY = 100;  // where the cat is walking to
+  let direction = 1;                 // 1 = facing right, -1 = facing left
+  let mode = 'idle';                 // 'idle' | 'walk' | 'run'
+  let frameIndex = 0;
+
+  const WALK_SPEED = 1.0;     // px per tick
+  const RUN_SPEED = 2.4;
+  const FRAME_INTERVAL = 150; // ms per animation frame
+  const MOVE_INTERVAL = 16;   // ms per position update (~60fps)
+  const ARRIVE_THRESHOLD = 4; // px distance considered "arrived"
+
+  function bounds(){
+    return {
+      maxX: window.innerWidth - cat.offsetWidth,
+      maxY: window.innerHeight - cat.offsetHeight
+    };
+  }
+
+  function setSprite(){
+    const facing = direction === 1 ? 'right' : 'left';
+    if (mode === 'idle'){
+      cat.src = frames.idle[facing];
+      return;
+    }
+    const set = frames[mode][facing];
+    cat.src = set[frameIndex % set.length];
+  }
+
+  function pickNewDestination(){
+    const { maxX, maxY } = bounds();
+    targetX = Math.random() * maxX;
+    targetY = Math.random() * maxY;
+
+    // decide walk vs run for this trip
+    mode = Math.random() < 0.75 ? 'walk' : 'run';
+    frameIndex = 0;
+  }
+
+  function goIdleThenWander(){
+    mode = 'idle';
+    setSprite();
+    const idleTime = 1200 + Math.random() * 2500; // idle 1.2–3.7s
+    setTimeout(() => {
+      pickNewDestination();
+    }, idleTime);
+  }
+
+  // ---- Animation frame cycling ----
+  setInterval(() => {
+    frameIndex++;
+    setSprite();
+  }, FRAME_INTERVAL);
+
+  // ---- Movement loop ----
+  setInterval(() => {
+    if (mode === 'idle') return;
+
+    const dx = targetX - x;
+    const dy = targetY - y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < ARRIVE_THRESHOLD){
+      goIdleThenWander();
+      return;
+    }
+
+    const speed = mode === 'run' ? RUN_SPEED : WALK_SPEED;
+    x += (dx / dist) * speed;
+    y += (dy / dist) * speed;
+
+    if (Math.abs(dx) > 0.5){
+      direction = dx > 0 ? 1 : -1;
+    }
+
+    cat.style.transform = `translate(${x}px, ${y}px)`;
+  }, MOVE_INTERVAL);
+
+  window.addEventListener('resize', () => {
+    const { maxX, maxY } = bounds();
+    x = Math.min(x, maxX);
+    y = Math.min(y, maxY);
+  });
+
+  // init
+  cat.style.transform = `translate(${x}px, ${y}px)`;
+  setSprite();
+  pickNewDestination();
+})();
