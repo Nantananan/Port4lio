@@ -22,9 +22,9 @@
 :root{
   --cream:#ffffff;     /* page background */
   --ink:#20203A;       /* main text / borders / dark panels */
-  --coral:#da645a;     /* primary accent (buttons, highlights) */
+  --:#da645a;     /* primary accent (buttons, highlights) */
   --sunshine:#FFCA3A;  /* secondary accent (eyebrow tags) */
-  --mint:#5faf8c;      /* accent color for pins/tabs */
+  --blues:#5cc5f6;      /* accent color for pins/tabs */
   --grape:#9D6FE0;     /* accent color for pins/tabs */
   --paper:#FFFFFF;     /* card background */
   --bg-soft:#f4f1ea;   /* main canvas */
@@ -56,13 +56,25 @@ body.dark-theme{
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html {
+  font-size: clamp(14px, 1.2vw, 16px);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   min-height: 100vh;
+  min-height: 100dvh; /* Use dynamic viewport height for mobile */
   background: var(--bg-soft);
   color: var(--ink);
   font-family: 'Helvetica Neue', Arial, sans-serif;
   overflow-x: hidden;
   transition: background 0.2s ease, color 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
 }
 
 .name {
@@ -82,7 +94,7 @@ body {
 }
 
 .name span:hover {
-  color: #3296f3;
+  color: #3d8ad2;
 }
 
 .hover-img {
@@ -232,7 +244,9 @@ section{
 /* ---- 3. Hero (#home): intro headline + floating "pinned note" decorations ---- */
 #home{
   padding-top:70px;
+  padding-bottom: 70px;
   min-height:90vh;
+  min-height: 90dvh;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -242,7 +256,7 @@ section{
   overflow:hidden;
 }
 .theme-toggle{
-  position:absolute;
+  position:fixed;
   top:24px;
   right:6vw;
   z-index:20;
@@ -253,14 +267,26 @@ section{
   font-weight:600;
   font-size:0.85rem;
   padding:10px 16px;
+  min-height: 44px;
+  min-width: 44px;
   border-radius:999px;
   cursor:pointer;
   box-shadow:3px 3px 0 var(--ink);
   transition:transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .theme-toggle:hover{
   transform:translate(-2px,-2px);
   box-shadow:5px 5px 0 var(--ink);
+}
+.theme-toggle:active {
+  transform:translate(-1px,-1px);
+  box-shadow:2px 2px 0 var(--ink);
 }
 .eyebrow{
   display:inline-block;
@@ -303,24 +329,31 @@ section{
   font-weight:600;
   font-size:1rem;
   padding:14px 28px;
+  min-height: 44px;
+  min-width: 44px;
   border-radius:14px;
   border:2px solid var(--ink);
   text-decoration:none;
   cursor:pointer;
-  display:inline-block;
+  display:inline-flex;
+  align-items: center;
+  justify-content: center;
   transition:transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow:5px 5px 0 var(--ink);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .btn:hover{
   transform:translate(-3px,-3px);
   box-shadow:8px 8px 0 var(--ink);
 }
+.btn:active {
+  transform:translate(-1px,-1px);
+  box-shadow:3px 3px 0 var(--ink);
+}
 .btn-primary{background:var(--coral); color:var(--ink);}
 .btn-secondary{background:var(--paper); color:var(--ink);}
-
-/* the 3 little sticky-note tags floating in the hero (☕ / ✦ / 🛠) —
-   each has its own rotation + animation-delay so they drift out of sync */
-
 
 /* ---- 4. Section headers: reusable "Heading + // tag" style used by
    About, Certifications, Gallery, and Contact ---- */
@@ -360,9 +393,12 @@ section{
   border:2px solid var(--ink);
   border-radius:16px;
   padding:26px;
-  box-shadow:6px 6px 0 var(--ink); /* flat "hard shadow" for the sticker look */
+  box-shadow:6px 6px 0 var(--ink);
   transition:transform 0.2s ease, box-shadow 0.2s ease;
   cursor:default;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 /* alternate slight tilt left/right so cards look hand-placed */
 .card:nth-child(odd){transform:rotate(-1.2deg);}
@@ -371,6 +407,10 @@ section{
 .card:hover{
   transform:translateY(-6px) rotate(0deg);
   box-shadow:10px 10px 0 var(--ink);
+}
+.card:active {
+  transform:translateY(-2px) rotate(0deg);
+  box-shadow:4px 4px 0 var(--ink);
 }
 .card .tab{
   display:inline-block;
@@ -397,14 +437,22 @@ section{
   margin:0 0 16px;
 }
 .card .links{
-  display:flex; gap:14px;
+  display:flex; 
+  gap:14px;
   font-size:0.85rem;
   font-weight:700;
+  flex-wrap: wrap;
+  margin-top: auto;
 }
 .card .links a{
   text-decoration:underline;
   text-decoration-color:var(--coral);
   text-underline-offset:3px;
+  padding: 6px 4px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ---- 6. Gallery: masonry-style photo/graphics grid.
@@ -423,17 +471,27 @@ section{
   box-shadow:5px 5px 0 var(--ink);
   transform:rotate(-0.6deg);
   transition:transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .gallery-item:nth-child(even){transform:rotate(0.8deg);}
 .gallery-item:hover{
   transform:rotate(0deg) scale(1.02);
   box-shadow:8px 8px 0 var(--ink);
 }
+.gallery-item:active {
+  transform:rotate(0deg) scale(1.01);
+  box-shadow:4px 4px 0 var(--ink);
+}
 .gallery-item img{
   display:block;
   width:100%;
   height:auto;
   cursor:zoom-in; /* hints that script.js opens these in a lightbox on click */
+  -webkit-user-drag: none;
+  user-select: none;
 }
 .gallery-item .caption{
   font-family:'Fredoka',sans-serif;
@@ -640,10 +698,15 @@ section{
   transition:transform 0.2s ease, box-shadow 0.2s ease;
   display:flex;
   flex-direction:column;
+  -webkit-tap-highlight-color: transparent;
 }
 .project-card:hover{
   transform:translate(-3px, -3px);
   box-shadow:6px 6px 0 var(--ink);
+}
+.project-card:active {
+  transform:translate(-1px, -1px);
+  box-shadow:2px 2px 0 var(--ink);
 }
 .project-card img{
   width:100%;
@@ -672,6 +735,7 @@ section{
 .project-card .links{
   display:flex;
   gap:12px;
+  flex-wrap: wrap;
 }
 .project-card .links a{
   font-size:0.9rem;
@@ -680,6 +744,10 @@ section{
   color:var(--coral);
   border-bottom:2px solid var(--coral);
   transition:color 0.2s ease;
+  padding: 6px 4px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 .project-card .links a:hover{
   color:var(--ink);
@@ -691,7 +759,7 @@ section{
 #about{
   background:var(--ink);
   color:var(--cream);
-  border-radius:0px;
+  border-radius:10px;
   margin:0 5vw;
   max-width:none;
   width:auto;
@@ -795,6 +863,7 @@ section{
 
 .stack span{
   font-family:'Space Mono',monospace;
+  space-out:0.07em;
   font-size:0.78rem;
   padding:6px 12px;
   border-radius:8px;
@@ -864,8 +933,17 @@ section{
   font-weight:700;
   position:relative;
   z-index:2;
+  flex-wrap: wrap;
 }
-.social a{text-decoration:none; border-bottom:2px solid var(--ink);}
+.social a {
+  text-decoration:none;
+  border-bottom:2px solid var(--ink);
+  padding: 8px 4px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
 .hero{
   position:relative;
   overflow:visible; /* don't clip the section */
