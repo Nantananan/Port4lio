@@ -3,6 +3,8 @@ const words = document.querySelectorAll('.name span');
 const themeToggle = document.getElementById('themeToggle');
 
 let mouseX = 0, mouseY = 0;
+let isTouchDevice = () => (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+let isTouch = isTouchDevice();
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
@@ -12,22 +14,28 @@ if (themeToggle) {
   });
 }
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  hoverImg.style.left = mouseX + 'px';
-  hoverImg.style.top = mouseY + 'px';
-});
+// Only enable hover image on non-touch devices
+if (!isTouch) {
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    hoverImg.style.left = mouseX + 'px';
+    hoverImg.style.top = mouseY + 'px';
+  });
 
-words.forEach(word => {
-  word.addEventListener('mouseenter', () => {
-    hoverImg.style.backgroundImage = `url(${word.dataset.img})`;
-    hoverImg.classList.add('active');
+  words.forEach(word => {
+    word.addEventListener('mouseenter', () => {
+      hoverImg.style.backgroundImage = `url(${word.dataset.img})`;
+      hoverImg.classList.add('active');
+    });
+    word.addEventListener('mouseleave', () => {
+      hoverImg.classList.remove('active');
+    });
   });
-  word.addEventListener('mouseleave', () => {
-    hoverImg.classList.remove('active');
-  });
-});
+} else {
+  // On touch devices, disable the hover image element
+  if (hoverImg) hoverImg.style.display = 'none';
+}
 
 const stack = document.getElementById('stack');
 const cards = document.querySelectorAll('.stack-card');
@@ -46,44 +54,47 @@ function setBaseTransform(card) {
 // set initial resting position for each card
 cards.forEach(setBaseTransform);
 
-stack.addEventListener('mousemove', (e) => {
-  const rect = stack.getBoundingClientRect();
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
+// Only enable repel effect on non-touch devices
+if (!isTouch && stack) {
+  stack.addEventListener('mousemove', (e) => {
+    const rect = stack.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-  cards.forEach(card => {
-    const baseX = parseFloat(card.dataset.baseX);
-    const baseY = parseFloat(card.dataset.baseY);
-    const rot = card.dataset.rot;
+    cards.forEach(card => {
+      const baseX = parseFloat(card.dataset.baseX);
+      const baseY = parseFloat(card.dataset.baseY);
+      const rot = card.dataset.rot;
 
-    // card's resting center, relative to the stack container
-    const cardCenterX = rect.width / 2 + baseX;
-    const cardCenterY = rect.height / 2 + baseY;
+      // card's resting center, relative to the stack container
+      const cardCenterX = rect.width / 2 + baseX;
+      const cardCenterY = rect.height / 2 + baseY;
 
-    const dx = cardCenterX - mouseX;
-    const dy = cardCenterY - mouseY;
-    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const dx = cardCenterX - mouseX;
+      const dy = cardCenterY - mouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
-    if (dist < REPEL_RADIUS) {
-      const strength = (1 - dist / REPEL_RADIUS) * MAX_PUSH;
-      const pushX = (dx / dist) * strength;
-      const pushY = (dy / dist) * strength;
+      if (dist < REPEL_RADIUS) {
+        const strength = (1 - dist / REPEL_RADIUS) * MAX_PUSH;
+        const pushX = (dx / dist) * strength;
+        const pushY = (dy / dist) * strength;
 
-      card.style.transform =
-        `translate(-50%, -50%) translate(${baseX + pushX}px, ${baseY + pushY}px) rotate(${rot}deg)`;
-    } else {
-      setBaseTransform(card);
-    }
+        card.style.transform =
+          `translate(-50%, -50%) translate(${baseX + pushX}px, ${baseY + pushY}px) rotate(${rot}deg)`;
+      } else {
+        setBaseTransform(card);
+      }
+    });
   });
-});
 
-stack.addEventListener('mouseleave', () => {
-  cards.forEach(setBaseTransform);
-});
+  stack.addEventListener('mouseleave', () => {
+    cards.forEach(setBaseTransform);
+  });
+}
 
 /* ---- Floating Card with Repel Effect ---- */
 const floatingCard = document.getElementById('floatingCard');
-if (floatingCard) {
+if (floatingCard && !isTouch) {
   const REPEL_RADIUS = 200;
   const MAX_PUSH = 45;
 
@@ -132,19 +143,36 @@ function openCardModal(card) {
   document.getElementById('cardModalDescription').textContent = description;
 
   cardModal.classList.add('is-open');
+  document.body.style.overflow = 'hidden'; // prevent scrolling when modal is open
 }
 
 function closeCardModal() {
   cardModal.classList.remove('is-open');
+  document.body.style.overflow = 'auto'; // re-enable scrolling
 }
 
 cardClickableCards.forEach(card => {
   card.addEventListener('click', () => openCardModal(card));
+  // Add touch event for better mobile support
+  card.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    openCardModal(card);
+  });
 });
 
 cardModalClose.addEventListener('click', closeCardModal);
+cardModalClose.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  closeCardModal();
+});
 
 cardModal.addEventListener('click', (e) => {
+  if (e.target === cardModal) {
+    closeCardModal();
+  }
+});
+
+cardModal.addEventListener('touchend', (e) => {
   if (e.target === cardModal) {
     closeCardModal();
   }
@@ -155,7 +183,6 @@ document.addEventListener('keydown', (e) => {
     closeCardModal();
   }
 });
-
 (function(){
   const cat = document.getElementById('catSprite');
 
@@ -169,8 +196,8 @@ document.addEventListener('keydown', (e) => {
   };
 
   // ---- State ----
-  let x = 100, y = 100;              // current position
-  let targetX = 100, targetY = 100;  // where the cat is walking to
+  const BOTTOM_OFFSET = 20;   // px from the bottom of the screen
+  let x = 100;                       // current horizontal position
   let direction = 1;                 // 1 = facing right, -1 = facing left
   let mode = 'idle';                 // 'idle' | 'walk' | 'run'
   let frameIndex = 0;
@@ -179,12 +206,11 @@ document.addEventListener('keydown', (e) => {
   const RUN_SPEED = 2.4;
   const FRAME_INTERVAL = 150; // ms per animation frame
   const MOVE_INTERVAL = 16;   // ms per position update (~60fps)
-  const ARRIVE_THRESHOLD = 4; // px distance considered "arrived"
 
   function bounds(){
     return {
       maxX: window.innerWidth - cat.offsetWidth,
-      maxY: window.innerHeight - cat.offsetHeight
+      y: window.innerHeight - cat.offsetHeight - BOTTOM_OFFSET
     };
   }
 
@@ -198,23 +224,24 @@ document.addEventListener('keydown', (e) => {
     cat.src = set[frameIndex % set.length];
   }
 
-  function pickNewDestination(){
-    const { maxX, maxY } = bounds();
-    targetX = Math.random() * maxX;
-    targetY = Math.random() * maxY;
-
-    // decide walk vs run for this trip
-    mode = Math.random() < 0.75 ? 'walk' : 'run';
+  function pickNewAction(){
+    // decide idle vs walk vs run for this stretch
+    const roll = Math.random();
+    if (roll < 0.3){
+      mode = 'idle';
+    } else if (roll < 0.75){
+      mode = 'walk';
+      direction = Math.random() < 0.5 ? 1 : -1;
+    } else {
+      mode = 'run';
+      direction = Math.random() < 0.5 ? 1 : -1;
+    }
     frameIndex = 0;
-  }
 
-  function goIdleThenWander(){
-    mode = 'idle';
-    setSprite();
-    const idleTime = 1200 + Math.random() * 2500; // idle 1.2–3.7s
-    setTimeout(() => {
-      pickNewDestination();
-    }, idleTime);
+    const duration = mode === 'idle'
+      ? 1200 + Math.random() * 2500   // idle 1.2–3.7s
+      : 1500 + Math.random() * 3500;  // move 1.5–5s
+    setTimeout(pickNewAction, duration);
   }
 
   // ---- Animation frame cycling ----
@@ -223,38 +250,33 @@ document.addEventListener('keydown', (e) => {
     setSprite();
   }, FRAME_INTERVAL);
 
-  // ---- Movement loop ----
+  // ---- Movement loop (horizontal only, along the bottom) ----
   setInterval(() => {
-    if (mode === 'idle') return;
+    const { maxX, y } = bounds();
 
-    const dx = targetX - x;
-    const dy = targetY - y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (mode !== 'idle'){
+      const speed = mode === 'run' ? RUN_SPEED : WALK_SPEED;
+      x += speed * direction;
 
-    if (dist < ARRIVE_THRESHOLD){
-      goIdleThenWander();
-      return;
-    }
-
-    const speed = mode === 'run' ? RUN_SPEED : WALK_SPEED;
-    x += (dx / dist) * speed;
-    y += (dy / dist) * speed;
-
-    if (Math.abs(dx) > 0.5){
-      direction = dx > 0 ? 1 : -1;
+      // loop around screen edges
+      if (x > maxX){
+        x = -cat.offsetWidth;
+      } else if (x < -cat.offsetWidth){
+        x = maxX;
+      }
     }
 
     cat.style.transform = `translate(${x}px, ${y}px)`;
   }, MOVE_INTERVAL);
 
   window.addEventListener('resize', () => {
-    const { maxX, maxY } = bounds();
+    const { maxX } = bounds();
     x = Math.min(x, maxX);
-    y = Math.min(y, maxY);
   });
 
   // init
-  cat.style.transform = `translate(${x}px, ${y}px)`;
+  const initial = bounds();
+  cat.style.transform = `translate(${x}px, ${initial.y}px)`;
   setSprite();
-  pickNewDestination();
+  pickNewAction();
 })();
