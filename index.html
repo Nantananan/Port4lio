@@ -80,13 +80,14 @@
   <div class="about-grid">
     <div class="about-visual">
       <div class="about-photo-frame">
-        <img src="assts/6.jpg" alt="Portrait of Renan">
+        <img src="images/3.jpg" alt="Portrait of Renan" class="photo-base">
+        <img src="images/4.jpg" alt="Portrait of Renan, alternate" class="photo-hover"> 
       </div>
     </div>
 
     <div class="about-copy">
-      <p> Information Technology Student with a passion for creating engaging digital experiences and Proven track record of academic excellence.</p>
-      <p style="margin-top:12px;">When I'm not shipping features, I'm usually sketching interface ideas in a notebook, or hunting down the perfect shade of Blue.</p>
+      <p style="font-size:20px ;"> Information Technology Student with a passion for creating engaging digital experiences and proven track record of academic excellence.</p>
+      <p style="font-size:20px; margin-top:10px;">When I'm not shipping features, I'm usually sketching, prototyping interface ideas in a notebook, or hunting down the perfect shade of Blue.</p>
      <!--
       <ul class="about-list">
         <li>
@@ -103,7 +104,10 @@
       </div>
   </div>
 </section>
-
+<!--
+<span class="tag-js">JavaScript</span>
+<span class="tag-react">React</span>
+-->
 <!-- =====================  CERTIFICATIONS & EDUCATION  =====================
      Each .card below is one certification or degree. Copy/paste a
      .card block to add more — the tab color cycles automatically
@@ -147,7 +151,7 @@
     </div>
 
     <!-- Education 2 -->
-    <div class="card card-clickable" data-img="assts/6.jpg" data-description="Served as student representative, organizing events and initiatives. Promoted leadership and community engagement among student body.">
+    <div class="card card-clickable" data-img="Certs/JPCS PCU 0049.jpg" data-description="Served as student representative, organizing events and initiatives. Promoted leadership and community engagement among student body.">
       <span class="tab">Extra Curricular</span>
       <h3>1st Year Representative - 2nd Year Interim Secretary</h3>
       <p>Junior Philippine Computer Society PCU Manila Chapter — 2026. Leadership role as Student Representative.</p>
@@ -216,37 +220,37 @@
   </div>
   <div class="projects-grid">
     <div class="project-card">
-      <img src="assts/6.jpg" alt="Project 1">
+      <img src="assts/nettles.jpg" alt="Project 1">
       <div class="project-content">
         <h3>Project Title 1</h3>
         <p>A brief description of your project goes here. Describe the problem you solved and the technologies used.</p>
         <div class="links">
-          <a href="#">View</a>
-          <a href="#">Code</a>
+          <a href="#"><!--live page link-->View</a>
+          <a href="https://youtu.be/sP0us82q1ck?si=684oZP6tHihwcykS" target="_blank" rel="noopener noreferrer">Code</a>
         </div>
       </div>
     </div>
 
     <div class="project-card">
-      <img src="assts/6.jpg" alt="Project 2">
+      <img src="assts/btmn.jpg" alt="Project 2">
       <div class="project-content">
         <h3>Project Title 2</h3>
         <p>A brief description of your project goes here. Describe the problem you solved and the technologies used.</p>
         <div class="links">
-          <a href="#">View</a>
-          <a href="#">Code</a>
+          <a href="#"><!--live page link-->View</a>
+          <a href="https://youtu.be/dQw4w9WgXcQ?si=SaTDzsYITBXn_c3w" target="_blank" rel="noopener noreferrer"><!--GitHub link-->Code</a> 
         </div>
       </div>
     </div>
 
     <div class="project-card">
-      <img src="assts/6.jpg" alt="Project 3">
+      <img src="assts/plower 2.jpg" alt="Project 3">
       <div class="project-content">
         <h3>Project Title 3</h3>
         <p>A brief description of your project goes here. Describe the problem you solved and the technologies used.</p>
         <div class="links">
-          <a href="#">View</a>
-          <a href="#">Code</a>
+          <a href="#"><!--live page link-->View</a>
+          <a href="https://youtu.be/LTyAa7_GxwI?si=uJxUuSC-Tt7h6q2S" target="_blank" rel="noopener noreferrer"><!--GitHub link-->Code</a>
         </div>
       </div>
     </div>
@@ -270,7 +274,7 @@
   </div>
   <div class="social">
     <a href="https://github.com/Nantananan" target="_blank">GitHub</a>
-    <a href="https://linkedin.com/in/renanclint" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/renan-clint-edis-437948328" target="_blank">LinkedIn</a>
   </div>
 </section>
 
@@ -293,6 +297,14 @@
     </div>
   </div>
 </div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <img id="modalImage" class="modal-image" src="" alt="">
+      <div class="modal-caption" id="modalCaption"></div>
+    </div>
+  </div>
 
 <!-- All interactive behavior lives in script.js -->
 <script src="script.js"></script>

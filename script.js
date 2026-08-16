@@ -280,3 +280,40 @@ document.addEventListener('keydown', (e) => {
   setSprite();
   pickNewAction();
 })();
+
+const galleryItems = document.querySelectorAll('.gallery-item');
+const modalOverlay = document.getElementById('modalOverlay');
+const closeBtn = document.getElementById('closeBtn');
+const modalImage = document.getElementById('modalImage');
+const modalCaption = document.getElementById('modalCaption');
+
+galleryItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const image = item.querySelector('img');
+    const caption = item.querySelector('.caption').textContent;
+
+    modalImage.src = image.src;
+    modalImage.alt = image.alt;
+    modalCaption.textContent = caption;
+
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+function closeModal() {
+  modalOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+closeBtn.addEventListener('click', closeModal);
+
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) closeModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+    closeModal();
+  }
+});
