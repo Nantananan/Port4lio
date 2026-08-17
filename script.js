@@ -14,6 +14,7 @@ if (themeToggle) {
   });
 }
 
+
 // Only enable hover image on non-touch devices
 if (!isTouch) {
   document.addEventListener('mousemove', (e) => {
@@ -183,6 +184,7 @@ document.addEventListener('keydown', (e) => {
     closeCardModal();
   }
 });
+/*
 (function(){
   const cat = document.getElementById('catSprite');
 
@@ -279,7 +281,7 @@ document.addEventListener('keydown', (e) => {
   cat.style.transform = `translate(${x}px, ${initial.y}px)`;
   setSprite();
   pickNewAction();
-})();
+})(); */
 
 const galleryItems = document.querySelectorAll('.gallery-item');
 const modalOverlay = document.getElementById('modalOverlay');

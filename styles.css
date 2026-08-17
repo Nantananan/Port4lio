@@ -22,7 +22,7 @@
 :root{
   --cream:#ffffff;     /* page background */
   --ink:#20203A;       /* main text / borders / dark panels */
-  --:#da645a;     /* primary accent (buttons, highlights) */
+  --coral:#da645a;     /* primary accent (buttons, highlights) */
   --sunshine:#FFCA3A;  /* secondary accent (eyebrow tags) */
   --blues:#5cc5f6;      /* accent color for pins/tabs */
   --grape:#9D6FE0;     /* accent color for pins/tabs */
@@ -49,7 +49,7 @@ body.dark-theme{
   --text-inverse-soft:#1e2a46;
   --muted:#1a4047;
   --sunshine:#ffd765;
-  --mint:#79e3b5;
+  --mint:#f2a814;
   --grape:#240469;
   --shadow: rgba(0,0,0,0.35);
 }
@@ -76,6 +76,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
+
+
 
 .name {
   font-size: clamp(3rem, 10vw, 8rem);
@@ -186,7 +188,20 @@ a:focus-visible, button:focus-visible{
   display: block;
   border-radius: 0;
 }
+.logo-image {
+  position: fixed;
+  size:20px;
+  top: 20px;
+  left: 15px;
+  height: auto;
+  z-index: 1000;
+}
 
+.logo-light light {display: block;}
+.logo-dark dark {display: none;}
+
+body.dark-theme .logo-light {display: none;}
+body.dark-theme .logo-dark {display: block;}
 /* ---- 2. Nav bar: sticky top bar with logo + jump links ---- */
 /*
 nav{
@@ -199,7 +214,9 @@ nav{
 }
 body.dark-theme nav{
   background:rgba(14,18,32,0.82);
-}
+} */
+
+/*
 .logo{
   font-family:'Fredoka',sans-serif;
   font-weight:700;
@@ -235,6 +252,8 @@ body.dark-theme nav{
 /* highlighted by script.js while its section is in view (see highlightActiveNavLink) */
 .nav-links a.active::after{width:100%;}
 -->
+
+
 section{
   padding:90px 6vw;
   max-width:1200px;
@@ -415,16 +434,16 @@ section{
 .card .tab{
   display:inline-block;
   font-family:'Fredoka',sans-serif;
-  font-size:0.72rem;
+  font-size:0.80rem;
   font-weight:600;
   padding:4px 10px;
   border-radius:20px;
   margin-bottom:14px;
 }
 /* cycle the tab (category label: Certification / Education) through the 4 accent colors, in order */
-.card:nth-child(4n+1) .tab{background:var(--coral); color:white;}
+.card:nth-child(4n+1) .tab{background:var(--mint); color:rgb(40, 65, 86);}
 .card:nth-child(4n+2) .tab{background:var(--mint);}
-.card:nth-child(4n+3) .tab{background:var(--grape); color:white;}
+.card:nth-child(4n+3) .tab{background:var(--coral); color:rgb(255, 252, 252);}
 .card:nth-child(4n+4) .tab{background:var(--sunshine);}
 .card h3{
   font-size:1.3rem;
@@ -611,7 +630,7 @@ section{
 }
  
 .modal-caption {
-  color: #fff;
+  color: #f8f6f6;
   font-size: 15px;
   margin-top: 14px;
   text-align: center;
@@ -1053,19 +1072,19 @@ section{
   background:var(--bg-soft);
 }
 
-/* ---------- CAT SPRITE ---------- */
+/* ---------- CAT SPRITE ---------- 
 .cat-sprite{
   position:fixed;
   top:0;
   left:0;
   width:96px;
   height:96px;
-  image-rendering:pixelated; /* keep pixel art crisp when scaled */
+  image-rendering:pixelated; /* keep pixel art crisp when scaled
   z-index:9999;
   pointer-events:none;
   will-change:transform;
-}
-
+} 
+*/
 /* ---- 9. Footer ---- */
 footer{
   text-align:center;
